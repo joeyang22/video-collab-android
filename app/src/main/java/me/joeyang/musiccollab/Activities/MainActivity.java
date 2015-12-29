@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
 import me.joeyang.musiccollab.R;
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private Socket mSocket;
     {
         try{
-            mSocket = IO.socket("https://pacific-hamlet-3110.herokuapp.com");
         }catch (Exception e){
             mSocket = null;
         }
