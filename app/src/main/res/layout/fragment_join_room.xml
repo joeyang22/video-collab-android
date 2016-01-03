@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="me.joeyang.musiccollab.Activities.JoinRoomActivityFragment">
+    tools:context="me.joeyang.musiccollab.Fragments.JoinRoomFragment">
     <LinearLayout
         android:id="@+id/editTextGrid"
         android:layout_width="match_parent"
@@ -19,30 +19,44 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/enter_name"
+            android:id="@+id/nameEditText"
+            android:layout_marginBottom="24dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/enter_room"
-            android:layout_marginBottom="14dp"
-            android:id="@+id/enterRoomEditText"/>
+            android:id="@+id/enterRoomEditText"
+            android:layout_marginBottom="24dp"
+            android:color="@color/colorPrimary"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/join"
+            android:layout_gravity="center_horizontal"
+            android:onClick="joinRoom"
+            android:id="@+id/addRoomButton"
+            android:layout_marginBottom="6dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/or"
             android:gravity="center_horizontal"
             android:textAllCaps="true"
-            android:layout_marginTop="0dp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/create_room"
             android:layout_marginTop="0dp"
-            android:id="@+id/createRoomEditText"/>
+            android:layout_marginBottom="6dp"/>
         <Button
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_below="@id/editTextGrid"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/go"
-            android:layout_gravity="center_horizontal"
-            android:onClick="connect"/>
+            android:text="@string/create_room"
+            android:layout_marginTop="0dp"
+            android:id="@+id/createRoomButton"
+            android:layout_marginBottom="0dp"
+            android:onClick="createRoom"/>
+
     </LinearLayout>
 
 
