@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -16,17 +17,17 @@ import me.joeyang.musiccollab.DeveloperKey;
 import me.joeyang.musiccollab.R;
 
 public class RoomFragment extends Fragment {
-    private static final String KEY_ROOM_ID = "room_id";
+
     private static final String LOG_TAG = RoomFragment.class.getSimpleName();
+
     TextView mRoomText;
     String roomId;
+    EditText mVideoIdText;
+
     YouTubePlayerSupportFragment mYouTubePlayerFragment;
 
-    public static RoomFragment newInstance(String roomId) {
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_ROOM_ID, roomId);
+    public static RoomFragment newInstance() {
         RoomFragment fragment = new RoomFragment();
-        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -37,7 +38,8 @@ public class RoomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        roomId = getArguments().getString(KEY_ROOM_ID);
+        roomId = getArguments().getString(getString(R.string.room_id));
+
     }
 
     @Override
@@ -47,11 +49,11 @@ public class RoomFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_room, container, false);
         mRoomText = (TextView) rootView.findViewById(R.id.roomNameTextView);
         mRoomText.setText(String.format(getString(R.string.room_name), roomId));
+        mVideoIdText = (EditText) rootView.findViewById(R.id.videoIdEditText);
 
         YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
 
         youTubePlayerFragment.initialize(DeveloperKey.DEVELOPER_KEY, new YouTubePlayer.OnInitializedListener() {
-
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
@@ -69,5 +71,11 @@ public class RoomFragment extends Fragment {
         return rootView;
     }
 
+    public String getVideoIdText(){
+        if (mVideoIdText!= null){
+            return mVideoIdText.getText().toString();
+        }
+        return "";
+    }
 
 }

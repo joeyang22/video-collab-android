@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private String name;
     private boolean inRoom = false;
     JoinRoomFragment joinRoomFragment;
+    RoomFragment roomFragment;
     private Socket mSocket;
     {
         try{
@@ -131,6 +132,30 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void addVideo(View view){
+        JSONObject obj = new JSONObject();
+        try{
+            obj.put(JsonConstants.roomId, roomId);
+            obj.put(JsonConstants.videoId, roomFragment.getVideoIdText());
+            mSocket.emit(SocketConstants.addingVideo, obj);
+        }catch(JSONException e){
+            return;
+        }
+    }
+
+
+    public void voteVideo(View view) {
+        JSONObject obj = new JSONObject();
+        try{
+            obj.put(JsonConstants.roomId, roomId);
+            obj.put(JsonConstants.videoId, roomFragment.getVideoIdText());
+            mSocket.emit(SocketConstants.votingVideo, obj);
+        }catch(JSONException e){
+            return;
+        }
+    }
+
     private Emitter.Listener onConnection = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
@@ -161,15 +186,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void call(Object... args) {
             if (!inRoom) {
+                JSONObject obj = (JSONObject) args[0];
 
-                RoomFragment fragment = RoomFragment.newInstance(roomId);
+                Bundle bundle = new Bundle();
+                bundle.putString(getString(R.string.current_videos), obj.toString());
+                bundle.putString(getString(R.string.room_id), roomId);
+
+                roomFragment = RoomFragment.newInstance();
+                roomFragment.setArguments(bundle);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.mainFragmentContainer, fragment);
+                transaction.replace(R.id.mainFragmentContainer, roomFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                for (Object o : args){
-                    Log.i(LOG_TAG, o.toString());
-                }
                 inRoom = true;
             }
         }

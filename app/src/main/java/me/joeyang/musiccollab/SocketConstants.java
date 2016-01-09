@@ -10,4 +10,8 @@ public class SocketConstants {
     public static final String videoVoted = "video voted";
     public static final String roomCreated = "room created";
     public static final String joinSuccessful = "join successful";
+    public static final String addingVideo = "adding video";
+    public static final String votingVideo = "voting video";
+
+
 }

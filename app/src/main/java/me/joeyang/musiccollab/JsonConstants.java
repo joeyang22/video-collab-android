@@ -10,5 +10,10 @@ public class JsonConstants {
     public static final String channel = "channel";
     public static final String videoId = "videoId";
     public static final String roomId = "roomId";
+    public static final String videos = "videos";
+    public static final String videoVotes = "video_votes";
+    public static final String orderChanged = "order_changed";
+
+
 
 }

@@ -14,4 +14,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="couldntJoinRoom">Couldn\'t join the room at this time. Please try again.</string>
     <string name="enter_name_alert">Please enter a name</string>
+    <string name="current_videos">current videos</string>
+    <string name="room_id">room_id</string>
+    <string name="add_video">Add String</string>
 </resources>

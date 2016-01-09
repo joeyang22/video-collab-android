@@ -16,12 +16,31 @@
     <FrameLayout
         android:id="@+id/youtubeSupportFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:visibility="visible"
         android:layout_below="@id/roomNameTextView"
         android:layout_margin="16dp"/>
 
+    <Button
+        android:layout_below="@id/youtubeSupportFragment"
+        android:id="@+id/addVideoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_video"
+        android:onClick="addVideo"/>
+    <Button
+        android:layout_below="@id/addVideoButton"
+        android:id="@+id/voteVideoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voting for video"
+        android:onClick="voteVideo"/>
+    <EditText
+        android:id="@+id/videoIdEditText"
+        android:layout_below="@id/voteVideoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </RelativeLayout>
