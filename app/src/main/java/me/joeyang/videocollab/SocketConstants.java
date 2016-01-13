@@ -1,4 +1,4 @@
-package me.joeyang.musiccollab;
+package me.joeyang.videocollab;
 
 /**
  * Created by Joe Yang on 1/1/2016.

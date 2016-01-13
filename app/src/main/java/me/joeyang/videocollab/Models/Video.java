@@ -1,4 +1,4 @@
-package me.joeyang.musiccollab.Models;
+package me.joeyang.videocollab.Models;
 
 /**
  * Created by joe on 15-12-26.

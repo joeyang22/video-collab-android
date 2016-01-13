@@ -1,5 +1,5 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment"
-    android:name="me.joeyang.musiccollab.Fragments.JoinRoomFragment"
+    android:name="me.joeyang.videocollab.Fragments.JoinRoomFragment"
     tools:layout="@layout/fragment_join_room" android:layout_width="match_parent"
     android:layout_height="match_parent" />

@@ -1,4 +1,4 @@
-package me.joeyang.musiccollab.Fragments;
+package me.joeyang.videocollab.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,8 +13,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
-import me.joeyang.musiccollab.DeveloperKey;
-import me.joeyang.musiccollab.R;
+import me.joeyang.videocollab.DeveloperKey;
+import me.joeyang.videocollab.R;
 
 public class RoomFragment extends Fragment {
 

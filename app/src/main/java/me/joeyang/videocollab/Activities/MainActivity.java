@@ -1,4 +1,4 @@
-package me.joeyang.musiccollab.Activities;
+package me.joeyang.videocollab.Activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,11 +22,12 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import me.joeyang.musiccollab.Fragments.JoinRoomFragment;
-import me.joeyang.musiccollab.Fragments.RoomFragment;
-import me.joeyang.musiccollab.JsonConstants;
-import me.joeyang.musiccollab.R;
-import me.joeyang.musiccollab.SocketConstants;
+import me.joeyang.videocollab.Fragments.JoinRoomFragment;
+import me.joeyang.videocollab.Fragments.RoomFragment;
+import me.joeyang.videocollab.Fragments.VideoSearchFragment;
+import me.joeyang.videocollab.JsonConstants;
+import me.joeyang.videocollab.R;
+import me.joeyang.videocollab.SocketConstants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private String roomId;
     private String name;
     private boolean inRoom = false;
+    private boolean mCreateRoom = false;
+
     JoinRoomFragment joinRoomFragment;
     RoomFragment roomFragment;
+    VideoSearchFragment searchFragment;
     private Socket mSocket;
     {
         try{
@@ -134,14 +138,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addVideo(View view){
-        JSONObject obj = new JSONObject();
-        try{
-            obj.put(JsonConstants.roomId, roomId);
-            obj.put(JsonConstants.videoId, roomFragment.getVideoIdText());
-            mSocket.emit(SocketConstants.addingVideo, obj);
-        }catch(JSONException e){
-            return;
+//        JSONObject obj = new JSONObject();
+//        try{
+//            obj.put(JsonConstants.roomId, roomId);
+//            obj.put(JsonConstants.videoId, roomFragment.getVideoIdText());
+//            mSocket.emit(SocketConstants.addingVideo, obj);
+//        }catch(JSONException e){
+//            return;
+//        }
+
+        if (searchFragment == null){
+            searchFragment = VideoSearchFragment.newInstance();
         }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.mainFragmentContainer, searchFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 
@@ -179,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             }catch(JSONException e){
                 roomId = "";
             }
+            mSocket.off(SocketConstants.roomCreated);
         }
     };
 
@@ -199,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 transaction.addToBackStack(null);
                 transaction.commit();
                 inRoom = true;
+                mSocket.off(SocketConstants.joiningRoom);
             }
         }
     };

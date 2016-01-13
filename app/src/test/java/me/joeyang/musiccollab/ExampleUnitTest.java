@@ -1,4 +1,4 @@
-package me.joeyang.musiccollab;
+package me.joeyang.videocollab;
 
 import org.junit.Test;
 

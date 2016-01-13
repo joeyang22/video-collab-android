@@ -16,5 +16,6 @@
     <string name="enter_name_alert">Please enter a name</string>
     <string name="current_videos">current videos</string>
     <string name="room_id">room_id</string>
-    <string name="add_video">Add String</string>
+    <string name="add_video">Add a Video</string>
+    <string name="search_video">Search for a video</string>
 </resources>
