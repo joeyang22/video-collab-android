@@ -1,5 +1,6 @@
 package me.joeyang.videocollab.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -119,6 +120,13 @@ public class VideoSearchFragment extends Fragment {
         return rootView;
     }
 
+    class SearchYouTubeTask extends AsyncTask<String, Object, String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return null;
+        }
+    }
 
 
 }

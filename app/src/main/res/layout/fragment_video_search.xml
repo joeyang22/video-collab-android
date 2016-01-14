@@ -13,7 +13,7 @@
             android:lines="1"
             android:singleLine="true"/>
 
-        <RecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/videoRecyclerView"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
