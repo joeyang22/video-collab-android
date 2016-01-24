@@ -2,13 +2,13 @@ package me.joeyang.videocollab.Fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.support.v4.app.Fragment;
 
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
@@ -49,34 +49,9 @@ public class VideoSearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        try{
-            youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
-            @Override
-            public void initialize(HttpRequest request) throws IOException {
+        SearchYouTubeTask task = new SearchYouTubeTask();
+        task.execute();
 
-            }
-            }).setApplicationName("Video-Collab").build();
-
-            String queryTerm = "Taylor Swift";
-            YouTube.Search.List search = youtube.search().list("id,snippet");
-            search.setKey(DeveloperKey.DEVELOPER_KEY);
-            search.setQ(queryTerm);
-            search.setType("video");
-            search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
-            search.setMaxResults(10l);
-            SearchListResponse searchResponse = search.execute();
-            List<SearchResult> searchResultList = searchResponse.getItems();
-            if (searchResultList != null) {
-                prettyPrint(searchResultList.iterator(), queryTerm);
-            }
-        } catch (GoogleJsonResponseException e) {
-            Log.e(LOG_TAG,"There was a service error: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
-        } catch (IOException e) {
-            Log.e(LOG_TAG,"There was an IO error: " + e.getCause() + " : " + e.getMessage());
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
 
         super.onCreate(savedInstanceState);
     }
@@ -124,8 +99,37 @@ public class VideoSearchFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
+            try{
+                youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
+                    @Override
+                    public void initialize(HttpRequest request) throws IOException {
+
+                    }
+                }).setApplicationName("Video-Collab").build();
+
+                String queryTerm = "Taylor Swift";
+                YouTube.Search.List search = youtube.search().list("id,snippet");
+                search.setKey(DeveloperKey.DEVELOPER_KEY);
+                search.setQ(queryTerm);
+                search.setType("video");
+                search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+                search.setMaxResults(10l);
+                SearchListResponse searchResponse = search.execute();
+                List<SearchResult> searchResultList = searchResponse.getItems();
+                if (searchResultList != null) {
+                    prettyPrint(searchResultList.iterator(), queryTerm);
+                }
+            } catch (GoogleJsonResponseException e) {
+                Log.e(LOG_TAG,"There was a service error: " + e.getDetails().getCode() + " : "
+                        + e.getDetails().getMessage());
+            } catch (IOException e) {
+                Log.e(LOG_TAG,"There was an IO error: " + e.getCause() + " : " + e.getMessage());
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
             return null;
         }
+
     }
 
 
