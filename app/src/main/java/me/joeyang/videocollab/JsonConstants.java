@@ -13,6 +13,7 @@ public class JsonConstants {
     public static final String videos = "videos";
     public static final String videoVotes = "video_votes";
     public static final String orderChanged = "order_changed";
+    public static final String videoResult = "video_result";
 
 
 

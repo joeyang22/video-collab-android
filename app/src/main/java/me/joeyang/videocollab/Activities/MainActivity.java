@@ -18,6 +18,7 @@ import android.view.View;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +27,11 @@ import me.joeyang.videocollab.Fragments.JoinRoomFragment;
 import me.joeyang.videocollab.Fragments.RoomFragment;
 import me.joeyang.videocollab.Fragments.VideoSearchFragment;
 import me.joeyang.videocollab.JsonConstants;
+import me.joeyang.videocollab.Models.Video;
 import me.joeyang.videocollab.R;
 import me.joeyang.videocollab.SocketConstants;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements VideoSearchFragment.SearchResultListener{
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     Context mContext;
@@ -232,4 +234,9 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    @Override
+    public void getVideoResult(Video v) {
+        Gson gson = new Gson();
+        mSocket.emit(SocketConstants.addingVideo, gson.toJson(v));
+    }
 }

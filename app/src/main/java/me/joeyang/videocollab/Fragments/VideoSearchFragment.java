@@ -42,6 +42,7 @@ public class VideoSearchFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Video> mVideoList;
 
+    private SearchResultListener listener;
     private YouTube youtube;
 
 
@@ -82,7 +83,7 @@ public class VideoSearchFragment extends Fragment {
         mVideoRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                
+                listener.getVideoResult(mVideoList.get(position));
             }
         }));
 
@@ -185,6 +186,8 @@ public class VideoSearchFragment extends Fragment {
             }
         }
     }
-
-
+    public interface SearchResultListener{
+        public void getVideoResult(Video v);
+    }
 }
+
