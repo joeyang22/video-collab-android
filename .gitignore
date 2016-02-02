@@ -7,3 +7,4 @@
 /build
 /captures
 .idea/vcs.xml
+/app/src/main/java/me/joeyang/videocollab/DeveloperKey.java
