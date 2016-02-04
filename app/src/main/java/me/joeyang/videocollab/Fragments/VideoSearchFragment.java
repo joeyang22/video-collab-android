@@ -1,5 +1,6 @@
 package me.joeyang.videocollab.Fragments;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,7 +34,7 @@ import me.joeyang.videocollab.Models.Video;
 import me.joeyang.videocollab.R;
 import me.joeyang.videocollab.RecyclerItemClickListener;
 
-public class VideoSearchFragment extends Fragment {
+    public class VideoSearchFragment extends Fragment {
 
     private static final String LOG_TAG = VideoSearchFragment.class.getSimpleName();
     private EditText mSearchText;
@@ -57,6 +58,15 @@ public class VideoSearchFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        try {
+            listener = (SearchResultListener) context;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
+        }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mVideoList = new ArrayList<Video>();
@@ -116,7 +126,6 @@ public class VideoSearchFragment extends Fragment {
 
                 if (searchResultList != null) {
                     addItemsToList(searchResultList.iterator());
-                    prettyPrint(searchResultList.iterator(), queryTerm);
                 }
             } catch (GoogleJsonResponseException e) {
                 Log.e(LOG_TAG,"There was a service error: " + e.getDetails().getCode() + " : "

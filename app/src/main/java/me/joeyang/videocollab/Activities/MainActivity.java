@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -18,7 +19,6 @@ import android.view.View;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -140,14 +140,6 @@ public class MainActivity extends AppCompatActivity implements VideoSearchFragme
     }
 
     public void addVideo(View view){
-//        JSONObject obj = new JSONObject();
-//        try{
-//            obj.put(JsonConstants.roomId, roomId);
-//            obj.put(JsonConstants.videoId, roomFragment.getVideoIdText());
-//            mSocket.emit(SocketConstants.addingVideo, obj);
-//        }catch(JSONException e){
-//            return;
-//        }
 
         if (searchFragment == null){
             searchFragment = VideoSearchFragment.newInstance();
@@ -207,15 +199,12 @@ public class MainActivity extends AppCompatActivity implements VideoSearchFragme
                 Bundle bundle = new Bundle();
                 bundle.putString(getString(R.string.current_videos), obj.toString());
                 bundle.putString(getString(R.string.room_id), roomId);
-
                 roomFragment = RoomFragment.newInstance();
                 roomFragment.setArguments(bundle);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.mainFragmentContainer, roomFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                swapMainFragment(roomFragment);
                 inRoom = true;
                 mSocket.off(SocketConstants.joiningRoom);
+                mSocket.on(SocketConstants.videoAdded, onVideoAdded);
             }
         }
     };
@@ -226,17 +215,44 @@ public class MainActivity extends AppCompatActivity implements VideoSearchFragme
             JSONObject object = new JSONObject();
             try{
                 object.put(JsonConstants.roomId, roomId);
-            }catch (JSONException e){
+            }catch (JSONException e) {
                 return;
             }
             mSocket.emit(SocketConstants.joiningRoom, object);
         }
     };
 
+    private Emitter.Listener onVideoAdded = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            try {
+                JSONObject object = (JSONObject) args[0];
+                Log.i(LOG_TAG, object.toString());
+            }catch(Exception e){
+                return;
+            }
+        }
+    };
+
 
     @Override
     public void getVideoResult(Video v) {
-        Gson gson = new Gson();
-        mSocket.emit(SocketConstants.addingVideo, gson.toJson(v));
+        try{
+            JSONObject obj = new JSONObject();
+            obj.put(JsonConstants.roomId, roomId);
+            obj.put(JsonConstants.videoId, v.videoId);
+            mSocket.emit(SocketConstants.addingVideo, obj);
+            swapMainFragment(roomFragment);
+        }catch(JSONException e){
+            return;
+        }
+
+    }
+
+    public void swapMainFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.mainFragmentContainer, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

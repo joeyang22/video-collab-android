@@ -13,7 +13,10 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
+import java.util.HashMap;
+
 import me.joeyang.videocollab.DeveloperKey;
+import me.joeyang.videocollab.Models.Video;
 import me.joeyang.videocollab.R;
 
 public class RoomFragment extends Fragment {
@@ -24,6 +27,7 @@ public class RoomFragment extends Fragment {
     String roomId;
     EditText mVideoIdText;
 
+    HashMap<String, Integer> mVideoVotes;
     YouTubePlayerSupportFragment mYouTubePlayerFragment;
 
     public static RoomFragment newInstance() {
@@ -39,7 +43,7 @@ public class RoomFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         roomId = getArguments().getString(getString(R.string.room_id));
-
+        mVideoVotes = new HashMap<>();
     }
 
     @Override
@@ -77,5 +81,10 @@ public class RoomFragment extends Fragment {
         }
         return "";
     }
+
+    public void voteVideo(Video video){
+        mVideoVotes.put(video.videoId, video.votes);
+    }
+
 
 }
